@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "No Text Restrictions",
-  "description": "Removes all the text restrictions in the client side.",
+  "description": "Removes all the text restrictions in the server side.",
   "authors": [
     "Asra"
   ],
@@ -14,16 +14,16 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/nores/icon.png",
+  "icon": "assets/noresserver/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "vin.ash.nores.NoResMod"
+      "vin.ash.noresserver.NoResMod"
     ]
   },
   "mixins": [
-    "nores.mixins.json"
+    "noresserver.mixins.json"
   ],
 
   "depends": {

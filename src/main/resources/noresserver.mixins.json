@@ -1,14 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "vin.ash.nores.mixins",
+  "package": "vin.ash.noresserver.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
   ],
-  "client": [
+  "server": [
     "SharedConstantsMixin"
   ],
-  "server": [],
   "injectors": {
     "defaultRequire": 1
   }

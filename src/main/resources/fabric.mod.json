@@ -9,8 +9,8 @@
     "Asra"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://ash.vin/",
+    "sources": "https://github.com/Ashvin-Ranjan/no-text-restrictions"
   },
 
   "license": "CC0-1.0",
@@ -27,10 +27,10 @@
   ],
 
   "depends": {
-    "fabricloader": ">=0.11.3",
+    "fabricloader": ">=0.13.3",
     "fabric": "*",
-    "minecraft": "1.17.x",
-    "java": ">=16"
+    "minecraft": "1.18.x",
+    "java": ">=17"
   },
   "suggests": {
     "another-mod": "*"

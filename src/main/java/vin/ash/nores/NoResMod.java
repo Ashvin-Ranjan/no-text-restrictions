@@ -1,30 +1,30 @@
 package vin.ash.nores;
 
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
-import net.minecraft.text.LiteralText;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.minecraft.text.Text;
 import vin.ash.nores.sharedstates.SharedStates;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
-import static net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 public class NoResMod implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		// Initialize commands
-
-		ClientCommandManager.DISPATCHER.register(literal("allowedChars")
+		ClientCommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
+			dispatcher.register(literal("allowedChars")
 				.then(literal("toggle").then(
 						literal("section")
 								.executes(context -> {
 									if (!SharedStates.charactersAllowed.contains((char) 167)) {
 										SharedStates.charactersAllowed.add((char) 167);
-										context.getSource().sendFeedback(new LiteralText("Section is now enabled to type"));
+										context.getSource().sendFeedback(Text.literal("Section is now enabled to type"));
 									} else {
 										SharedStates.charactersAllowed.remove((char) 167);
-										context.getSource().sendFeedback(new LiteralText("Section is now disabled to type"));
+										context.getSource().sendFeedback(Text.literal("Section is now disabled to type"));
 									}
 									return 0;
 								})
@@ -32,10 +32,10 @@ public class NoResMod implements ModInitializer {
 						literal("newline").executes(context -> {
 							if (!SharedStates.charactersAllowed.contains('\n')) {
 								SharedStates.charactersAllowed.add('\n');
-								context.getSource().sendFeedback(new LiteralText("Newline is now enabled to type"));
+								context.getSource().sendFeedback(Text.literal("Newline is now enabled to type"));
 							} else {
 								SharedStates.charactersAllowed.remove('\n');
-								context.getSource().sendFeedback(new LiteralText("Newline is now disabled to type"));
+								context.getSource().sendFeedback(Text.literal("Newline is now disabled to type"));
 							}
 							return 0;
 						})
@@ -43,10 +43,10 @@ public class NoResMod implements ModInitializer {
 						literal("all").executes(context -> {
 							SharedStates.allowAll = !SharedStates.allowAll;
 							if (SharedStates.allowAll) {
-								context.getSource().sendFeedback(new LiteralText((char) 167 + "4 [DANGER]: YOU ARE ALLOWING ALL CHARACTERS TO BE TYPED, THIS MAY HAVE UNFORESEEN CONSEQUENCES " + (char) 167 + "r"));
+								context.getSource().sendFeedback(Text.literal((char) 167 + "4 [DANGER]: YOU ARE ALLOWING ALL CHARACTERS TO BE TYPED, THIS MAY HAVE UNFORESEEN CONSEQUENCES " + (char) 167 + "r"));
 							} else {
 
-								context.getSource().sendFeedback(new LiteralText("All characters are not able to be typed unless other perms say so"));
+								context.getSource().sendFeedback(Text.literal("All characters are not able to be typed unless other perms say so"));
 							}
 							return 0;
 						})
@@ -58,7 +58,7 @@ public class NoResMod implements ModInitializer {
 									out += "Newline: " + SharedStates.charactersAllowed.contains('\n') + "\n";
 									out += "All Allowed: " + SharedStates.allowAll;
 
-									context.getSource().sendFeedback(new LiteralText(out));
+									context.getSource().sendFeedback(Text.literal(out));
 									return 0;
 								})
 						)
@@ -67,9 +67,11 @@ public class NoResMod implements ModInitializer {
 								.executes(context -> {
 									SharedStates.charactersAllowed = new HashSet<>();
 									SharedStates.allowAll = false;
-									context.getSource().sendFeedback(new LiteralText("Reset to base permissions"));
+									context.getSource().sendFeedback(Text.literal("Reset to base permissions"));
 									return 0;
 								})
-				));
+				)
+			);
+		});
 	}
 }
